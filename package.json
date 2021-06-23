@@ -1,0 +1,23 @@
+{
+  "name": "prjwkt2json",
+  "version": "0.0.1",
+  "description": "Simple class for converting srtext entries from an ESRI .prj file or Posstgres spatial_ref_sys.srtext record into a JSON object ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arthur-clifford/prjwkt2json.git"
+  },
+  "keywords": [
+    "prj",
+    "json"
+  ],
+  "author": "Arthur Clifford",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/arthur-clifford/prjwkt2json/issues"
+  },
+  "homepage": "https://github.com/arthur-clifford/prjwkt2json#readme"
+}
