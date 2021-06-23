@@ -1,12 +1,11 @@
 class SRTextParser {
-    constructor() {
-        this.text = '';
-        this.result = {};
-        this.buffer = '';
-        this.mode = 'start';
-        this.depth = 0;
-        this.depths = [];
-    }
+    text = '';
+    result = {};
+    currentData;
+    buffer = '';
+    mode = 'start';
+    depth = 0;
+    depths = [];
     Parse(what) {
         this.text = what;
         this.currentData = this.result;

@@ -1,6 +1,6 @@
 {
   "name": "prjwkt2json",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Simple class for converting srtext entries from an ESRI .prj file or Posstgres spatial_ref_sys.srtext record into a JSON object ",
   "main": "build/index.js",
   "module": "build/index.es.js",
@@ -8,7 +8,7 @@
   "scripts": {
     "test": "ts-node node_modules/jasmine/bin/jasmine --config=jasmine.json",
     "build": "rollup -c",
-    "dist": "rimraf build/* && rollup -c && move build dist",
+    "dist": "rimraf build/* &&  rimraf dist && rollup -c && move ./build ./dist",
     "type": "tsc --noEmit",
     "coverage": "nyc -r text -e .ts -x \"tests/*.test.ts\" npm run test"
   },
