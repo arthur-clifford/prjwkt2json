@@ -1,5 +1,5 @@
 import "jasmine";
-import { SRTextParser } from '../index';
+import { SRTextParser } from '../src/index';
 
 describe('parse prj file data', function () {
     const data = 'PROJCS["NAD_1983_StatePlane_California_V_FIPS_0405_Feet",GEOGCS["GCS_North_American_1983",DATUM["D_North_American_1983",SPHEROID["GRS_1980",6378137,298.257222101]],PRIMEM["Greenwich",0],UNIT["Degree",0.017453292519943295]],PROJECTION["Lambert_Conformal_Conic"],PARAMETER["False_Easting",6561666.666666666],PARAMETER["False_Northing",1640416.666666667],PARAMETER["Central_Meridian",-118],PARAMETER["Standard_Parallel_1",34.03333333333333],PARAMETER["Standard_Parallel_2",35.46666666666667],PARAMETER["Latitude_Of_Origin",33.5],UNIT["Foot_US",0.30480060960121924]]';
@@ -11,6 +11,7 @@ describe('parse prj file data', function () {
     it('should parse without errors', () => {
         const parser = new SRTextParser();
         const result = parser.Parse(data);
+        
     });
     it('should return an object from Parse', () => {
         const parser = new SRTextParser();
@@ -29,7 +30,6 @@ describe('parse prj file data', function () {
     it('should have the correct content', () => {
         const parser = new SRTextParser();
         const result = parser.Parse(data);
-        console.log(result);
         const keys = Object.keys(result);
         const firstKey = keys[0];
         expect(firstKey).toEqual('PROJCS');
@@ -49,14 +49,19 @@ describe('parse prj file data', function () {
         expect(result.PROJCS.PRIMEM.label).toEqual('Greenwich');
         expect(result.PROJCS.PRIMEM.values.length).toEqual(1);
         expect(result.PROJCS.PRIMEM.values[0]).toEqual('0');
-        expect(result.PROJCS.UNIT.label).toEqual('Foot US');
-        expect(result.PROJCS.UNIT.values.length).toEqual(1);
-        expect(result.PROJCS.UNIT.values[0]).toEqual('0.30480060960121924');
+        expect(Array.isArray(result.PROJCS.UNIT)).toBeTrue();
+        expect(result.PROJCS.UNIT[0].label).toEqual('Degree');
+        expect(result.PROJCS.UNIT[0].values.length).toEqual(1);
+        expect(result.PROJCS.UNIT[0].values[0]).toEqual('0.017453292519943295');
+        expect(result.PROJCS.UNIT[1].label).toEqual('Foot US');
+        expect(result.PROJCS.UNIT[1].values.length).toEqual(1);
+        expect(result.PROJCS.UNIT[1].values[0]).toEqual('0.30480060960121924');
         expect(result.PROJCS.PROJECTION).toBeTruthy();
         expect(result.PROJCS.PROJECTION.label).toEqual('Lambert Conformal Conic');
-        expect(result.PROJCS.PARAMETER.label).toEqual('Latitude Of Origin');
-        expect(result.PROJCS.PARAMETER.values.length).toEqual(1);
-        expect(result.PROJCS.PARAMETER.values[0]).toEqual('33.5');    
+        expect(Array.isArray(result.PROJCS.PARAMETER)).toBeTrue();
+        expect(result.PROJCS.PARAMETER[0].label).toEqual('False Easting');
+        expect(result.PROJCS.PARAMETER[0].values.length).toEqual(1);
+        expect(result.PROJCS.PARAMETER[0].values[0]).toEqual('6561666.666666666');    
         
 
         

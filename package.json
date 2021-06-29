@@ -1,6 +1,6 @@
 {
   "name": "prjwkt2json",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Simple class for converting srtext entries from an ESRI .prj file or Posstgres spatial_ref_sys.srtext record into a JSON object ",
   "main": "build/index.js",
   "module": "build/index.es.js",

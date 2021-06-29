@@ -65,7 +65,19 @@ class SRTextParser {
                     }
                     else {
                         const data = {};
-                        this.currentData[this.buffer] = data;
+                        if (!!this.currentData[this.buffer]) {
+                            if (Array.isArray(this.currentData[this.buffer])) {
+                                this.currentData[this.buffer].push(data);
+                            }
+                            else {
+                                const currentItem = this.currentData[this.buffer];
+                                this.currentData[this.buffer] = [currentItem];
+                                this.currentData[this.buffer].push(data);
+                            }
+                        }
+                        else {
+                            this.currentData[this.buffer] = data;
+                        }
                         this.depths.push(this.currentData);
                         this.currentData = data;
                         this.buffer = '';
