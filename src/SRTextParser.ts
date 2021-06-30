@@ -7,7 +7,7 @@ export class SRTextParser {
   private depth = 0;
   private depths: Array<any> = [];
   Parse(what: string) {
-    this.result = [];
+    this.result = {};
     this.text = what;
     this.currentData = this.result;
     this.buffer = '';

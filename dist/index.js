@@ -12,7 +12,7 @@ class SRTextParser {
         this.depths = [];
     }
     Parse(what) {
-        this.result = [];
+        this.result = {};
         this.text = what;
         this.currentData = this.result;
         this.buffer = '';
