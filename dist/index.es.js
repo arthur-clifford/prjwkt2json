@@ -8,6 +8,7 @@ class SRTextParser {
         this.depths = [];
     }
     Parse(what) {
+        this.result = [];
         this.text = what;
         this.currentData = this.result;
         this.buffer = '';
@@ -21,11 +22,11 @@ class SRTextParser {
                     else {
                         const data = {};
                         this.currentData[this.buffer] = data;
+                        this.depths.push(this.currentData[this.buffer]);
                         this.currentData = data;
                         this.buffer = '';
                         this.mode = 'groupContent';
                         this.depth += 1;
-                        this.depths.push(this.currentData);
                     }
                     break;
                 case 'groupContent':
@@ -74,7 +75,7 @@ class SRTextParser {
                         else {
                             this.currentData[this.buffer] = data;
                         }
-                        this.depths.push(this.currentData);
+                        this.depths.push(this.currentData[this.buffer]);
                         this.currentData = data;
                         this.buffer = '';
                         this.mode = 'groupContent';
@@ -88,7 +89,15 @@ class SRTextParser {
                     else {
                         if (this.depth > 0) {
                             this.mode = 'groupContent';
-                            this.currentData['label'] = this.buffer.replace(/_/g, ' ');
+                            if (!!this.currentData['label']) {
+                                if (!this.currentData['values']) {
+                                    this.currentData['values'] = [];
+                                }
+                                this.currentData['values'].push(this.buffer);
+                            }
+                            else {
+                                this.currentData['label'] = this.buffer.replace(/_/g, ' ');
+                            }
                         }
                         this.buffer = '';
                     }

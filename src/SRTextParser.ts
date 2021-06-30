@@ -7,11 +7,13 @@ export class SRTextParser {
   private depth = 0;
   private depths: Array<any> = [];
   Parse(what: string) {
+    this.result = [];
     this.text = what;
     this.currentData = this.result;
     this.buffer = '';
     this.depths.push(this.currentData);
     for (const char of this.text) {
+      
       switch (this.mode) {
         case 'start':
           if (char !== '[') {
@@ -19,11 +21,12 @@ export class SRTextParser {
           } else {
             const data: any = {};
             this.currentData[this.buffer] = data;
+            this.depths.push(this.currentData[this.buffer]);            
             this.currentData = data;
             this.buffer = '';
             this.mode = 'groupContent';
             this.depth += 1;
-            this.depths.push(this.currentData);            
+            
           }
           break;
         case 'groupContent':
@@ -71,7 +74,8 @@ export class SRTextParser {
             } else {
               this.currentData[this.buffer] = data;
             }            
-            this.depths.push(this.currentData);
+            this.depths.push(this.currentData[this.buffer]);
+            
             this.currentData = data;
             this.buffer = '';
             this.mode = 'groupContent';
@@ -82,11 +86,16 @@ export class SRTextParser {
           if (char !== '"') {
             this.buffer += char;
           } else {
-
             if (this.depth > 0) {
-              this.mode = 'groupContent'
-              this.currentData['label'] = this.buffer.replace(/_/g,' ');
-
+              this.mode = 'groupContent';
+              if(!!this.currentData['label']) {
+                if(!this.currentData['values']) {
+                  this.currentData['values'] = [];
+                }
+                this.currentData['values'].push(this.buffer);
+              } else {
+                this.currentData['label'] = this.buffer.replace(/_/g,' ');
+              }
             }
             this.buffer = '';
 
