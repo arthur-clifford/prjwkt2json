@@ -103,6 +103,7 @@ export class SRTextParser {
           break;
       }
     }
+    this.result = this.currentData;
     return this.result;
   }  
 }
