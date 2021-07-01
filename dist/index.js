@@ -16,6 +16,8 @@ class SRTextParser {
         this.text = what;
         this.currentData = this.result;
         this.buffer = '';
+        this.depths = [];
+        this.depth = 0;
         this.depths.push(this.currentData);
         for (const char of this.text) {
             switch (this.mode) {
@@ -109,7 +111,7 @@ class SRTextParser {
             }
         }
         this.result = this.currentData;
-        return this.result;
+        return this.currentData;
     }
 }
 
